@@ -1,0 +1,26 @@
+name: go
+
+on:
+  push:
+    branches: ["*"]
+  pull_request:
+    branches: ["*"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: setup go
+        uses: actions/setup-go@v4
+        with:
+          go-version: 1.22
+
+      - name: golangci-lint
+        uses: golangci/golangci-lint-action@v4.0.0
+        with:
+          version: latest
+
+      - name: go test
+        run: go test -v ./...
